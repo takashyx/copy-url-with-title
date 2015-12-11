@@ -20,23 +20,25 @@ function copyURLWithTitle(event) {
     if ((event.altKey)) format = "markdown";
 
     // newline symbol
-    var crlf = "[[[br]]]"
+    var crlf_flag = "[[[br]]]";
+    var crlf = isWin ? "\r\n" : "\n";
     var options;
 
     if (format == "text") {
-        output = document.title + crlf + document.location.href + crlf;
+        text_for_toast = document.title + crlf_flag + document.location.href + crlf_flag;
+        text_for_clipboard = document.title + crlf + document.location.href + crlf;
         options = { settings: {duration: 3000}, style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 0, 0, .85)"} } };
     }
 
     if (format == "markdown") {
-        output = "[" + document.title + "](" + document.location.href + ")" + crlf;
+        text_for_toast = "[" + document.title + "](" + document.location.href + ")" + crlf_flag;
+        text_for_clipboard = "[" + document.title + "](" + document.location.href + ")" + crlf;
         options = { settings: {duration: 3000}, style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 32, 0, .85)" } } };
     }
 
     // exec
-    chrome.runtime.sendMessage({command: "saveToClipboard", text: output });
-
-    takashyx.toast.Toast("Copied (" + format + " format): " + crlf + crlf + output , options);
+    chrome.runtime.sendMessage({command: "saveToClipboard", text: text_for_clipboard });
+    takashyx.toast.Toast("Copied (" + format + " format): " + crlf_flag + crlf_flag + text_for_toast, options);
 }
 
 function isSelected() {

@@ -2,8 +2,8 @@
   "manifest_version": 2 ,
   "name": "Copy URL with Title",
   "short_name": "Copy URL",
-  "description": "Copy title and URL using Control+C(Win)/Command+C(Mac).\nBy using Alt+C(Win)/Option+C(Mac) you can copy them in markdown link format.",
-  "version": "1.0.0.0",
+  "description": "Copy title and URL using Control+C(Win)/Command+C(Mac). By using Alt+C(Win)/Option+C(Mac) you can get them in markdown link format.",
+  "version": "1.0.0.1",
    "icons": {
       "128": "icon_128.png",
       "16": "icon_016.png",

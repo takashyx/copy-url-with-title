@@ -253,7 +253,7 @@ takashyx.toast = (function() {
 
 
 	/**
-	 * Clean up after the Toast slides away. Namely, removing the Toast from the DOM. After the Toast is cleaned up, display the next Toast in the queue if any exists
+	 * Clean up after the Toast slides away. Namely, removing the Toast from the DOM.
 	 */
 	Toast.prototype.destroy = function() {
 		var toastStage = getToastStage();
