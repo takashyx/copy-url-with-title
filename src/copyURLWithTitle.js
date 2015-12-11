@@ -19,16 +19,24 @@ function copyURLWithTitle(event) {
     if ((isWin && event.ctrlKey) || (isMac && event.metaKey)) format = "text";
     if ((event.altKey)) format = "markdown";
 
-    // newline character
-    var crlf  = isWin ? "\r\n" : "\n";
+    // newline symbol
+    var crlf = "[[[br]]]"
+    var options;
 
-    if (format == "text")
-        output = document.title + crlf + document.location.href + crlf + crlf;
-    if (format == "markdown")
-        output = "[" + document.title + "](" + document.location.href + ")" + crlf + crlf;
+    if (format == "text") {
+        output = document.title + crlf + document.location.href + crlf;
+        options = { settings: {duration: 3000}, style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 0, 0, .85)"} } };
+    }
+
+    if (format == "markdown") {
+        output = "[" + document.title + "](" + document.location.href + ")" + crlf;
+        options = { settings: {duration: 3000}, style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 32, 0, .85)" } } };
+    }
 
     // exec
     chrome.runtime.sendMessage({command: "saveToClipboard", text: output });
+
+    takashyx.toast.Toast("Copied (" + format + " format): " + crlf + crlf + output , options);
 }
 
 function isSelected() {
