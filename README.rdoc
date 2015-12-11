@@ -1,0 +1,7 @@
+= Copy URL with text (text format & markdown format)
+
+A chrome extension to copy title and URL using Control+C(Win)/Command+C(Mac).\nBy using Alt+C(Win)/Option+C(Mac) you can copy them in markdown link format.
+
+Visual feedback is also available when the text copied.
+
+Chorme Extension: To be published
