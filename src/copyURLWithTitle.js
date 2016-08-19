@@ -16,7 +16,7 @@ function copyURLWithTitle(event) {
     if (isSelected()) return;
 
     // detect copy type
-    if ((isWin && event.ctrlKey) || (isMac && event.metaKey)) format = "text";
+    if (((!isMac) && event.ctrlKey) || (isMac && event.metaKey)) format = "text";
     if ((event.altKey)) format = "markdown";
 
     // newline symbol
