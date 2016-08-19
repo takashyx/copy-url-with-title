@@ -37,8 +37,10 @@ function copyURLWithTitle(event) {
     }
 
     // exec
-    chrome.runtime.sendMessage({command: "saveToClipboard", text: text_for_clipboard });
-    takashyx.toast.Toast("Copied (" + format + " format): " + crlf_flag + crlf_flag + text_for_toast, options);
+    if(format != "") {
+        chrome.runtime.sendMessage({command: "saveToClipboard", text: text_for_clipboard });
+        takashyx.toast.Toast("Copied (" + format + " format): " + crlf_flag + crlf_flag + text_for_toast, options);
+    }
 }
 
 function isSelected() {
