@@ -21,7 +21,7 @@
     {
       "all_frames": true,
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["copyURLwithTitle.js", "toast.js"],
+      "js": ["copyurlwithtitle.js", "toast.js"],
       "run_at": "document_start"
     }
   ]
