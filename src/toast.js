@@ -3,14 +3,14 @@
 
 var takashyx = takashyx || {};
 
-takashyx.toast = (function() {
+takashyx.toast = (function () {
 
 	/**
 	 * The main Toast object
 	 * @param {Object} options See Toast.prototype.DEFAULT_SETTINGS for more info
 	 */
 	function Toast(text, options) {
-		if(getToastStage() != null) {
+		if (getToastStage() != null) {
 			// If there is already a Toast being shown, hide it
 			Toast.prototype.destroy();
 		}
@@ -77,7 +77,7 @@ takashyx.toast = (function() {
 			}
 		},
 		settings: {
-			duration: 4000
+			duration: 2500
 		}
 	};
 
@@ -101,11 +101,11 @@ takashyx.toast = (function() {
 	 * Merge the DEFAULT_SETTINGS with the user defined options if specified
 	 * @param  {Object} options The user defined options
 	 */
-	Toast.prototype.mergeOptions = function(initialOptions, customOptions) {
+	Toast.prototype.mergeOptions = function (initialOptions, customOptions) {
 		var merged = customOptions;
-		for(var prop in initialOptions) {
-			if(merged.hasOwnProperty(prop)) {
-				if(initialOptions[prop] != null && initialOptions[prop].constructor == Object) {
+		for (var prop in initialOptions) {
+			if (merged.hasOwnProperty(prop)) {
+				if (initialOptions[prop] != null && initialOptions[prop].constructor == Object) {
 					merged[prop] = Toast.prototype.mergeOptions(initialOptions[prop], merged[prop]);
 				}
 			} else {
@@ -120,8 +120,8 @@ takashyx.toast = (function() {
 	 * Add the inline stylesheet to the <head>
 	 * These inline styles are needed for animation purposes.
 	 */
-	Toast.prototype.initializeStyles = function() {
-		if(Toast.prototype.styleExists) return;
+	Toast.prototype.initializeStyles = function () {
+		if (Toast.prototype.styleExists) return;
 
 		var style = document.createElement("style");
 
@@ -152,14 +152,14 @@ takashyx.toast = (function() {
 	 * @param  {String|Object} text    The text to show inside the Toast, can be an HTML element or plain text
 	 * @param  {Object} style   The style to set for the Toast
 	 */
-	Toast.prototype.generate = function(text, style) {
+	Toast.prototype.generate = function (text, style) {
 		var toastStage = document.createElement("div");
 
 
 		/**
 		 * If the text is a String, create a textNode for appending
 		 */
-		if(typeof text === "string") {
+		if (typeof text === "string") {
 
 			var lines = text.split('[[[br]]]');
 
@@ -183,10 +183,10 @@ takashyx.toast = (function() {
 	 * @param  {Object}  styles  An object containing the style to apply
 	 * @return                   Returns nothing
 	 */
-	Toast.prototype.stylize = function(element, styles) {
-		Object.keys(styles).forEach(function(style) {
+	Toast.prototype.stylize = function (element, styles) {
+		Object.keys(styles).forEach(function (style) {
 			element.style[style] = styles[style];
-			console.log(style + ": "+  styles[style]);
+			console.log(style + ": " + styles[style]);
 		});
 	};
 
@@ -198,10 +198,10 @@ takashyx.toast = (function() {
 	 * @param  {Object} styles       The style to insert into the inline stylsheet
 	 * @return {String}              The inline style as a string
 	 */
-	Toast.prototype.generateInlineStylesheetRules = function(elementClass, styles) {
+	Toast.prototype.generateInlineStylesheetRules = function (elementClass, styles) {
 		var out = "." + elementClass + "{";
 
-		Object.keys(styles).forEach(function(style) {
+		Object.keys(styles).forEach(function (style) {
 			out += style + ":" + styles[style] + ";";
 		});
 		out += "}";
@@ -215,7 +215,7 @@ takashyx.toast = (function() {
 	 * @param  {String} text    The text to show inside the Toast
 	 * @param  {Object} options The object containing the options for the Toast
 	 */
-	Toast.prototype.show = function(text, options) {
+	Toast.prototype.show = function (text, options) {
 		this.initializeStyles();
 		this.generate(text, options.style.main);
 
@@ -240,7 +240,7 @@ takashyx.toast = (function() {
 	/**
 	 * Hide the Toast that's currently shown
 	 */
-	Toast.prototype.hide = function() {
+	Toast.prototype.hide = function () {
 		var toastStage = getToastStage();
 		toastStage.classList.remove(Toast.prototype.CLASS_TOAST_VISIBLE);
 		toastStage.classList.add(Toast.prototype.CLASS_TOAST_GONE);
@@ -255,7 +255,7 @@ takashyx.toast = (function() {
 	/**
 	 * Clean up after the Toast slides away. Namely, removing the Toast from the DOM.
 	 */
-	Toast.prototype.destroy = function() {
+	Toast.prototype.destroy = function () {
 		var toastStage = getToastStage();
 		document.body.removeChild(toastStage);
 
