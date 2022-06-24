@@ -13,9 +13,6 @@
   "permissions": [
     "clipboardWrite"
   ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "content_scripts": [
     {
       "all_frames": true,
