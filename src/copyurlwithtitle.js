@@ -12,34 +12,44 @@ function copyURLWithTitle(event) {
     var isWin = (navigator.platform.indexOf("Win") != -1);
     var isMac = (navigator.platform.indexOf("Mac") != -1);
 
-    // check selection
-    if (isSelected()) return;
+    // newline symbol
+    var crlf_flag = "[[[br]]]";
+    var crlf = isWin ? "\r\n" : "\n";
+    var title_for_toast;
+    var contnt_for_toast;
+    var text_for_clipboard;
+    var options;
 
+    // check selection
+    if (isSelected()) {
+        title_for_toast = "Copied (normal copy)";
+        content_for_toast = window.getSelection() + "";
+        options = { style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 0, 64, .85)"} } };
+        takashyx.toast.Toast(title_for_toast, content_for_toast, options);
+        return;
+    }
     // detect copy type
     if (((!isMac) && event.ctrlKey) || (isMac && event.metaKey)) format = "text";
     if ((event.altKey)) format = "markdown";
 
-    // newline symbol
-    var crlf_flag = "[[[br]]]";
-    var crlf = isWin ? "\r\n" : "\n";
-    var options;
-
     if (format == "text") {
-        text_for_toast = document.title + crlf_flag + document.location.href + crlf_flag;
+        title_for_toast = "URL with Title Copied (text format)";
+        content_for_toast = document.title + crlf_flag + document.location.href + crlf_flag;
         text_for_clipboard = document.title + crlf + document.location.href + crlf;
-        options = { settings: {duration: 3000}, style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 0, 0, .85)"} } };
+        options = { style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(64, 64, 0, .85)"} } };
     }
 
     if (format == "markdown") {
-        text_for_toast = "[" + document.title + "](" + document.location.href + ")" + crlf_flag;
+        title_for_toast = "URL with Title Copied (markdown format)";
+        content_for_toast = "[" + document.title + "](" + document.location.href + ")" + crlf_flag;
         text_for_clipboard = "[" + document.title + "](" + document.location.href + ")" + crlf;
-        options = { settings: {duration: 3000}, style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 32, 0, .85)" } } };
+        options = {  style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 64, 0, .85)" } } };
     }
 
     // exec
     if(format != "") {
         navigator.clipboard.writeText(text_for_clipboard).then(()=>{
-            takashyx.toast.Toast("Copied (" + format + " format): " + crlf_flag + crlf_flag + text_for_toast, options)
+            takashyx.toast.Toast(title_for_toast, content_for_toast, options)
         }).catch((error) => { alert(`Copy failed! ${error}`) });
     }
 }

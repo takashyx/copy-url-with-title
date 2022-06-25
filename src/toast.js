@@ -9,7 +9,7 @@ takashyx.toast = (function () {
 	 * The main Toast object
 	 * @param {Object} options See Toast.prototype.DEFAULT_SETTINGS for more info
 	 */
-	function Toast(text, options) {
+	function Toast(title, content, options) {
 		if (getToastStage() != null) {
 			// If there is already a Toast being shown, hide it
 			Toast.prototype.destroy();
@@ -17,7 +17,7 @@ takashyx.toast = (function () {
 		var _options = options || {};
 		_options = Toast.prototype.mergeOptions(Toast.prototype.DEFAULT_SETTINGS, _options);
 
-		Toast.prototype.show(text, _options);
+		Toast.prototype.show(title, content, _options);
 
 		_options = null;
 	};
@@ -65,7 +65,6 @@ takashyx.toast = (function () {
 
 				"color": "rgba(255, 255, 255, .9)",
 
-				"padding": "10px 15px",
 				"max-width": "40%",
 				"word-break": "keep-all",
 				"margin": "0 auto",
@@ -74,6 +73,15 @@ takashyx.toast = (function () {
 				"position": "fixed",
 				"left": "0",
 				"right": "0"
+			},
+			title: {
+				"font-weight": "bold",
+				"font-size": "2em"
+			},
+			content:{
+				"margin": "6px",
+				"padding": "4px",
+				"border": "1px solid white"
 			}
 		},
 		settings: {
@@ -148,33 +156,43 @@ takashyx.toast = (function () {
 
 
 	/**
-	 * Generate the Toast with the specified text.
-	 * @param  {String|Object} text    The text to show inside the Toast, can be an HTML element or plain text
-	 * @param  {Object} style   The style to set for the Toast
+	 * Generate the Toast with the specified content.
+	 * @param  {String} title The content to show inside the Toast, can be an HTML element or plain content
+	 * @param  {String|Object} content The content to show inside the Toast, can be an HTML element or plain content
+	 * @param  {Object} style style to set for the Toast
 	 */
-	Toast.prototype.generate = function (text, style) {
+	Toast.prototype.generate = function (title, content, style) {
+
 		var toastStage = document.createElement("div");
-
-
+		var titleDiv = document.createElement("div");
+		titleDiv.appendChild(document.createTextNode(title));
+		toastStage.appendChild(titleDiv);
+		var contentDiv = document.createElement("div");
 		/**
-		 * If the text is a String, create a textNode for appending
+		 * If the content is a String, create a textNode for appending
 		 */
-		if (typeof text === "string") {
+		if (typeof content === "string") {
 
-			var lines = text.split('[[[br]]]');
+			var lines = content.split('[[[br]]]');
 
 			for (var i in lines) {
 				var l = document.createTextNode(lines[i]);
-				toastStage.appendChild(l);
-				var r = document.createElement('br');
-				toastStage.appendChild(r);
+				contentDiv.appendChild(l);
+				// var r = document.createElement('br');
+				// contentDiv.appendChild(r);
 			}
 		}
+		else {
+			contentDiv.appendChild(content);
+		}
 
+		toastStage.appendChild(contentDiv);
 		setToastStage(toastStage);
 		toastStage = null;
 
-		Toast.prototype.stylize(getToastStage(), style);
+		Toast.prototype.stylize(getToastStage(), style.main);
+		Toast.prototype.stylize(titleDiv, style.title);
+		Toast.prototype.stylize(contentDiv, style.content);
 	};
 
 	/**
@@ -212,12 +230,13 @@ takashyx.toast = (function () {
 
 	/**
 	 * Show the Toast
-	 * @param  {String} text    The text to show inside the Toast
+	 * @param  {String} title content to show inside the Toast
+	 * @param  {Object} content The content to show inside the Toast
 	 * @param  {Object} options The object containing the options for the Toast
 	 */
-	Toast.prototype.show = function (text, options) {
+	Toast.prototype.show = function (title, content, options) {
 		this.initializeStyles();
-		this.generate(text, options.style.main);
+		this.generate(title, content, options.style);
 
 		var toastStage = getToastStage();
 		toastStage.classList.add(this.CLASS_TOAST_ANIMATED);
