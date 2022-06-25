@@ -18,40 +18,65 @@ function copyURLWithTitle(event) {
     var title_for_toast;
     var contnt_for_toast;
     var text_for_clipboard;
-    var options;
+    var options_for_toast;
+    var show_toast = false;
+    var override_copy = false;
 
-    // check selection
-    if (isSelected()) {
-        title_for_toast = "Copied (normal copy)";
-        content_for_toast = window.getSelection() + "";
-        options = { style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 0, 64, .85)"} } };
-        takashyx.toast.Toast(title_for_toast, content_for_toast, options);
-        return;
-    }
-    // detect copy type
-    if (((!isMac) && event.ctrlKey) || (isMac && event.metaKey)) format = "text";
-    if ((event.altKey)) format = "markdown";
+    //get options
+    chrome.storage.sync.get(function (items) {
+        console.log("copyurlwithtitle.js");
+        console.log(items);
 
-    if (format == "text") {
-        title_for_toast = "URL with Title Copied (text format)";
-        content_for_toast = document.title + crlf_flag + document.location.href + crlf_flag;
-        text_for_clipboard = document.title + crlf + document.location.href + crlf;
-        options = { style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(64, 64, 0, .85)"} } };
-    }
+        // detect copy type
+        if (((!isMac) && event.ctrlKey) || (isMac && event.metaKey)) {
 
-    if (format == "markdown") {
-        title_for_toast = "URL with Title Copied (markdown format)";
-        content_for_toast = "[" + document.title + "](" + document.location.href + ")" + crlf_flag;
-        text_for_clipboard = "[" + document.title + "](" + document.location.href + ")" + crlf;
-        options = {  style: { main: { color: "rgba(255, 255, 255, .85)", background: "rgba(0, 64, 0, .85)" } } };
-    }
+            // check selection
+            if (isSelected()) {
+                format = "normal";
+            }
+            else {
+                format = "text";
+            }
+        }
 
-    // exec
-    if(format != "") {
-        navigator.clipboard.writeText(text_for_clipboard).then(()=>{
-            takashyx.toast.Toast(title_for_toast, content_for_toast, options)
-        }).catch((error) => { alert(`Copy failed! ${error}`) });
-    }
+        if ((event.altKey)) format = "markdown";
+
+        if (format === "normal" && items["show-normal"]) {
+            title_for_toast = "Copied(Normal):";
+            content_for_toast = window.getSelection() + "";
+            options_for_toast = { style: { main: { color: items["normal-text-color"], background: items["normal-bg-color"] } } };
+            takashyx.toast.Toast(title_for_toast, content_for_toast, options_for_toast);
+            console.log("toast options: " + JSON.stringify(options_for_toast));
+            show_toast = true;
+        }
+        else if (format === "text" && items["show-text"]) {
+            title_for_toast = "URL with Title Copied(Text):";
+            content_for_toast = document.title + crlf_flag + document.location.href + crlf_flag;
+            text_for_clipboard = document.title + crlf + document.location.href + crlf;
+            options_for_toast = { style: { main: { color: items["text-format-text-color"], background: items["text-format-bg-color"] } } };
+            show_toast = true;
+            override_copy = true;
+        }
+
+        else if (format === "markdown" && items["show-markdown"]) {
+            title_for_toast = "URL with Title Copied(Markdown):";
+            content_for_toast = "[" + document.title + "](" + document.location.href + ")" + crlf_flag;
+            text_for_clipboard = "[" + document.title + "](" + document.location.href + ")" + crlf;
+            options_for_toast = { style: { main: { color: items["markdown-format-text-color"], background: items["markdown-format-bg-color"] } } };
+            show_toast = true;
+            override_copy = true;
+        }
+
+        // exec
+        if (show_toast) {
+            takashyx.toast.Toast(title_for_toast, content_for_toast, options_for_toast);
+            console.log("toast options: " + JSON.stringify(options_for_toast));
+        }
+        if (override_copy) {
+            navigator.clipboard.writeText(text_for_clipboard).then(() => {
+            }).catch((error) => { alert(`Copy failed! ${error}`) });
+        }
+    });
 }
 
 function isSelected() {
@@ -59,13 +84,13 @@ function isSelected() {
     // detect by range count
     var sel = window.getSelection();
     if (sel.rangeCount <= 0) return false;
-    if (sel.rangeCount > 1)  return true;
+    if (sel.rangeCount > 1) return true;
 
     // when sel.rangeCount == 1
     var range = sel.getRangeAt(0);
-    if (! range.collapsed) return true;
+    if (!range.collapsed) return true;
     if (range.startContainer != range.endContainer) return true;
-    if (range.startOffset    != range.endOffset)    return true;
+    if (range.startOffset != range.endOffset) return true;
     if (document.activeElement.tagName.toLowerCase() != "body") return true;
 
     return false;

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    #option-page-title {
+      margin: 0px;
+      padding: 10px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: yellow;
+      background-color: black;
+    }
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 6px;
+      padding: 4px;
+    }
+    .content {
+      border: solid 1px white;
+      margin: 6px;
+      padding: 4px;
+      border-radius: 5px;
+    }
+    .preview-container {
+      margin: 5px;
+      padding: 5px;
+      opacity: 0.85;
+      border-radius: 5px;
+      box-shadow: 0 0 10 rgba(0, 0, 0, 0.9);
+      max-width: 50%;
+      text-align: center;
+    }
+  </style>
+  <body>
+    <div id="option-page-title">Copy URL with Title - Settings</div>
+    <h1>Toast notifications</h1>
+    Show notifications on:
+    <input
+      id="show-normal"
+      type="checkbox"
+      value="off"
+      class="copy-url-with-title-input"
+    />Normal Copy <input id="show-text" type="checkbox" / value = "off"
+    class="copy-url-with-title-input">Text Format
+    <input
+      id="show-markdown"
+      type="checkbox"
+      value="off"
+      class="copy-url-with-title-input"
+    />Markdown Format
+    <h1>Colors</h1>
+    <h2>Normal Copy (Ctrl+C or Cmd+C with selection)</h2>
+    <div>
+      <button>
+        <input
+          type="color"
+          id="normal-text-color"
+          class="normal copy-url-with-title-input"
+        />Text
+      </button>
+      <button>
+        <input
+          type="color"
+          id="normal-bg-color"
+          class="normal copy-url-with-title-input"
+        />Background
+      </button>
+    </div>
+    <div id="preview-normal" class="preview-container">
+      <div class="title">Copied (Normal) :</div>
+      <div class="content">preview.</div>
+    </div>
+    <h2>Text Format Copy (Ctrl+C or Cmd+C w/o selection)</h2>
+    <div>
+      <button>
+        <input
+          type="color"
+          id="text-format-text-color"
+          class="text-format copy-url-with-title-input"
+        />Text
+      </button>
+      <button>
+        <input
+          type="color"
+          id="text-format-bg-color"
+          class="text-format copy-url-with-title-input"
+        />Background
+      </button>
+    </div>
+    <div id="preview-text" class="preview-container">
+      <div class="title">URL with Title Copied (Text):</div>
+      <div class="content">preview.</div>
+    </div>
+    <h2>Markdown Format Copy (Alt+C or Opt+C w/o selection)</h2>
+    <div>
+      <button>
+        <input
+          type="color"
+          id="markdown-format-text-color"
+          class="markdown-format copy-url-with-title-input"
+        />Text
+      </button>
+      <button>
+        <input
+          type="color"
+          id="markdown-format-bg-color"
+          class="markdown-format copy-url-with-title-input"
+        />Background
+      </button>
+    </div>
+    <div id="preview-markdown" class="preview-container">
+      <div class="title">URL with Title Copied (Markdown) :</div>
+      <div class="content">preview.</div>
+    </div>
+    <div id="msg"></div>
+    <script src="options.js"></script>
+    <h1>Restore default settings</h1>
+    <input
+      type="button"
+      id="restore-copy-url-with-title-defaults"
+      value="Restore"
+    />
+    <div id="msg"></div>
+  </body>
+</html>

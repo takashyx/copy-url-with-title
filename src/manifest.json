@@ -11,8 +11,13 @@
     "48": "icon_048.png"
   },
   "permissions": [
-    "clipboardWrite"
+    "clipboardWrite",
+    "storage"
   ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab":true
+  },
   "content_scripts": [
     {
       "all_frames": true,
@@ -22,7 +27,8 @@
       ],
       "js": [
         "copyurlwithtitle.js",
-        "toast.js"
+        "toast.js",
+        "options.js"
       ],
       "run_at": "document_start"
     }

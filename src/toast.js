@@ -57,31 +57,36 @@ takashyx.toast = (function () {
 		style: {
 			main: {
 				"background": "rgba(0, 0, 0, .85)",
-				"box-shadow": "0 0 10px rgba(0, 0, 0, .8)",
+				"box-shadow": "0 0 10px rgba(0, 0, 0, .9)",
 
-				"border-radius": "3px",
+				"border-radius": "5px",
 
 				"z-index": "99999",
 
 				"color": "rgba(255, 255, 255, .9)",
 
-				"max-width": "40%",
+				"max-width": "60%",
 				"word-break": "keep-all",
-				"margin": "0 auto",
 				"text-align": "center",
 
 				"position": "fixed",
 				"left": "0",
-				"right": "0"
+				"right": "0",
+
+				"margin": "0px auto",
+				"padding": "10px"
 			},
 			title: {
 				"font-weight": "bold",
-				"font-size": "2em"
+				"font-size": "1.5rem",
+				"margin": "0px, 6px, 6px, 6px",
+				"padding": "4px",
 			},
-			content:{
+			content: {
 				"margin": "6px",
 				"padding": "4px",
-				"border": "1px solid white"
+				"border": "1px solid white",
+				"border-radius": "5px",
 			}
 		},
 		settings: {
@@ -139,7 +144,7 @@ takashyx.toast = (function () {
 				"top": "10%"
 			}) +
 			Toast.prototype.generateInlineStylesheetRules(this.CLASS_TOAST_VISIBLE, {
-				"opacity": "1",
+				"opacity": "0.9",
 				"top": "10%"
 			}) +
 			Toast.prototype.generateInlineStylesheetRules(this.CLASS_TOAST_ANIMATED, {
@@ -166,7 +171,9 @@ takashyx.toast = (function () {
 		var toastStage = document.createElement("div");
 		var titleDiv = document.createElement("div");
 		titleDiv.appendChild(document.createTextNode(title));
+
 		toastStage.appendChild(titleDiv);
+
 		var contentDiv = document.createElement("div");
 		/**
 		 * If the content is a String, create a textNode for appending
@@ -178,8 +185,6 @@ takashyx.toast = (function () {
 			for (var i in lines) {
 				var l = document.createTextNode(lines[i]);
 				contentDiv.appendChild(l);
-				// var r = document.createElement('br');
-				// contentDiv.appendChild(r);
 			}
 		}
 		else {
@@ -204,7 +209,6 @@ takashyx.toast = (function () {
 	Toast.prototype.stylize = function (element, styles) {
 		Object.keys(styles).forEach(function (style) {
 			element.style[style] = styles[style];
-			console.log(style + ": " + styles[style]);
 		});
 	};
 
