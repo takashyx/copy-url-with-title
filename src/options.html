@@ -2,18 +2,35 @@
 <html>
   <style>
     #option-page-title {
+      position: relative;
       margin: 0px;
-      padding-top: 32px;
-      padding-bottom: 32px;
-      padding-left: 136px;
-      font-size: 2.4rem;
+      padding-top: 48px;
+      padding-bottom: 48px;
+      padding-left: 152px;
+      font-size: 2.6rem;
       font-weight: bold;
+      text-shadow: 0 0 10px black;
       color: yellow;
-      background-color: black;
+      background-color: white;
+    }
+    #option-page-title::before {
+      content: "";
+      position: absolute;
       background-image: url("icon_128.png");
-      background-position: left center;
-      background-size: 128px 128px;
-      background-repeat: no-repeat;
+
+      /* vertical  */
+      top: 0;
+      bottom: 0;
+      margin: auto;
+
+      /* horizontal */
+      left: 6px;
+
+      /* image size */
+      width: 128px;
+      height: 128px;
+
+      background-size: contain;
     }
 
     .title {
