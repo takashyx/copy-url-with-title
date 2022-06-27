@@ -182,9 +182,13 @@ takashyx.toast = (function () {
 
 			var lines = content.split('[[[br]]]');
 
+			var s = document.createElement('br');
+			contentDiv.appendChild(s);
 			for (var i in lines) {
 				var l = document.createTextNode(lines[i]);
 				contentDiv.appendChild(l);
+				var r = document.createElement('br');
+				contentDiv.appendChild(r);
 			}
 		}
 		else {
