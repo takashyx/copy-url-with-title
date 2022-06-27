@@ -43,7 +43,7 @@ function copyURLWithTitle(event) {
 
         if (format === "normal" && items["show-normal"]) {
             title_for_toast = "Copied(Normal):";
-            content_for_toast = window.getSelection() + "";
+            content_for_toast = window.getSelection() + crlf_flag;
             options_for_toast = { style: { main: { color: items["normal-text-color"], background: items["normal-bg-color"] } } };
             takashyx.toast.Toast(title_for_toast, content_for_toast, options_for_toast);
             console.log("toast options: " + JSON.stringify(options_for_toast));
