@@ -44,7 +44,7 @@ function copyURLWithTitle(event) {
         if (format === "normal" && items["show-normal"]) {
             title_for_toast = "Copied(Normal):";
             content_for_toast = window.getSelection() + crlf_flag;
-            options_for_toast = { style: { main: { color: items["normal-text-color"], background: items["normal-bg-color"] } } };
+            options_for_toast = { style: { main: { color: items["normal-text-color"], background: items["normal-bg-color"] } }, settings: { duration: parseInt(items["toast-duration"]) } };
             takashyx.toast.Toast(title_for_toast, content_for_toast, options_for_toast);
             console.log("toast options: " + JSON.stringify(options_for_toast));
             show_toast = true;
@@ -53,7 +53,9 @@ function copyURLWithTitle(event) {
             title_for_toast = "URL with Title Copied(Text):";
             content_for_toast = document.title + crlf_flag + document.location.href + crlf_flag;
             text_for_clipboard = document.title + crlf + document.location.href + crlf;
-            options_for_toast = { style: { main: { color: items["text-format-text-color"], background: items["text-format-bg-color"] } } };
+            options_for_toast = {
+                style: { main: { color: items["text-format-text-color"], background: items["text-format-bg-color"] } }, settings: { duration: parseInt(items["toast-duration"]) }
+            };
             show_toast = true;
             override_copy = true;
         }
@@ -62,7 +64,7 @@ function copyURLWithTitle(event) {
             title_for_toast = "URL with Title Copied(Markdown):";
             content_for_toast = "[" + document.title + "](" + document.location.href + ")" + crlf_flag;
             text_for_clipboard = "[" + document.title + "](" + document.location.href + ")" + crlf;
-            options_for_toast = { style: { main: { color: items["markdown-format-text-color"], background: items["markdown-format-bg-color"] } } };
+            options_for_toast = { style: { main: { color: items["markdown-format-text-color"], background: items["markdown-format-bg-color"] } }, settings: { duration: parseInt(items["toast-duration"]) } };
             show_toast = true;
             override_copy = true;
         }

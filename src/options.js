@@ -1,4 +1,5 @@
 var default_options = {
+	"toast-duration": "1800",
 	"show-normal": true,
 	"show-text": true,
 	"show-markdown": true,
@@ -19,6 +20,7 @@ function checkAndRestore() {
 	console.log("checkAndRestore")
 	chrome.storage.sync.get(function (items) {
 		if (!Object.keys(items).length) {
+			// no item
 			console.log("checkAndRestore detected no settings. restore default");
 			chrome.storage.sync.set(default_options, function (r) {
 				console.log("restore default:");
@@ -26,6 +28,19 @@ function checkAndRestore() {
 				document.querySelector("#msg").innerText = "restored default settings.";
 				updateGUI(default_options);
 			});
+		}
+		else {
+			// per item
+			for (let key in default_options) {
+				if (key in items && items[key] != null && items[key] != "") {
+					// console.log("key exist    : " + key + " value:" + items[key]);
+				} else {
+					console.log("key NOT EXIST: " + key + " value:" + items[key] + " update:" + default_options[key]);
+
+					items[key] = default_options[key];
+					chrome.storage.sync.set(items);
+				}
+			}
 		}
 	});
 }
@@ -107,9 +122,11 @@ document.querySelectorAll(".copy-url-with-title-input").forEach((elm) => {
 
 		if ("checkbox" === elm.type) {
 			options[e.target.id] = e.target.checked;
+			console.log(e.target.id + " updated: " + e.target.checked);
 		}
 		else {
 			options[e.target.id] = e.target.value;
+			console.log(e.target.id + "updated: " + e.target.value);
 		}
 
 		chrome.storage.sync.set(options, function (result) {

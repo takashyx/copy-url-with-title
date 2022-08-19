@@ -89,9 +89,6 @@ takashyx.toast = (function () {
 				"border-radius": "5px",
 			}
 		},
-		settings: {
-			duration: 2500
-		}
 	};
 
 
@@ -260,7 +257,7 @@ takashyx.toast = (function () {
 		var toastStage = null;
 
 		clearTimeout(Toast.prototype.timeout);
-		Toast.prototype.timeout = setTimeout(Toast.prototype.hide, options.settings.duration);
+		Toast.prototype.timeout = setTimeout(Toast.prototype.hide, parseInt(options.settings.duration));
 	};
 
 
